@@ -14,7 +14,7 @@ function App() {
 
     useEffect(() => {
         selectRef.current.addEventListener("change", () => {
-            console.log(selectRef);
+            console.log(selectRef.current.selectedOptions[0].text);
         });
     });
 
