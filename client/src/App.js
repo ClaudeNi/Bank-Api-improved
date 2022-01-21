@@ -14,14 +14,20 @@ function App() {
 
     useEffect(() => {
         selectRef.current.addEventListener("change", () => {
-            console.log("changed");
+            console.log(selectRef);
         });
     });
+
+    const handleSend = (e) => {
+        e.preventDefault();
+    };
+
     return (
         <div className="App">
             <div>
                 Action:
                 <select ref={selectRef}>
+                    <option>Select</option>
                     <option>Get all users</option>
                     <option>Get specific user</option>
                     <option>Add a user</option>
@@ -54,7 +60,11 @@ function App() {
                         onChange={(e) => setInput3(e.target.value)}
                         value={input3}
                     ></input>
-                    <input type={"button"} value={"Send"}></input>
+                    <input
+                        type={"button"}
+                        value={"Send"}
+                        onClick={handleSend}
+                    ></input>
                 </form>
             </div>
             <div>{text}</div>
