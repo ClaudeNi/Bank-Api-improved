@@ -4,7 +4,7 @@ const userModel = require("../model/user");
 const getUser = async (req, res) => {
     const id = req.params.id;
     try {
-        const user = await userModel.findById(id);
+        const user = await userModel.find({ id: id });
         if (!user) {
             return res
                 .status(404)
