@@ -89,7 +89,6 @@ const deposit = async (req, res) => {
 };
 
 const transfer = async (req, res) => {
-    const { id1, id2, transfer } = req.body;
     const id1 = req.body.id1;
     const id2 = req.body.id2;
     const transfer = req.body.transfer;
