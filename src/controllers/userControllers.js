@@ -50,11 +50,7 @@ const withdraw = async (req, res) => {
                 .send(`Can't withdraw ${withdraw}$ from ${updatedUser.cash}`);
         }
         const newCash = updatedUser.cash - withdraw;
-        const user = await userModel.updateOne(
-            { id: id },
-            { cash: newCash },
-            { new: true }
-        );
+        const user = await userModel.updateOne({ id: id }, { cash: newCash });
         if (!user) {
             return res.status(404).send(`No User with the ID "${id}"`);
         }
@@ -69,11 +65,7 @@ const deposit = async (req, res) => {
     try {
         const updatedUser = await userModel.find({ id: id });
         const newCash = updatedUser.cash + deposit;
-        const user = await userModel.updateOne(
-            { id: id },
-            { cash: newCash },
-            { new: true }
-        );
+        const user = await userModel.updateOne({ id: id }, { cash: newCash });
         if (!user) {
             return res.status(404).send("No User with this ID.");
         }
@@ -102,13 +94,11 @@ const transfer = async (req, res) => {
         const newCash2 = user2.cash + transfer;
         const newUser1 = await userModel.updateOne(
             { id: id1 },
-            { cash: newCash1 },
-            { new: true }
+            { cash: newCash1 }
         );
         const newUser2 = await userModel.updateOne(
             { id: id2 },
-            { cash: newCash2 },
-            { new: true }
+            { cash: newCash2 }
         );
         if (!newUser1 || !newUser2) {
             return res.status(404).send("Couldn't find user.");
