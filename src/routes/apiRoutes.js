@@ -1,12 +1,12 @@
 const express = require("express");
 const {
-  getUser,
-  addUser,
-  deleteUser,
-  getAllUsers,
-  withdraw,
-  depositing,
-  transferring,
+    getUser,
+    addUser,
+    deleteUser,
+    getAllUsers,
+    withdraw,
+    deposit,
+    transfer,
 } = require("../controllers/userControllers");
 
 const apiRouter = express.Router();
@@ -17,8 +17,8 @@ apiRouter.get("/users", getAllUsers);
 apiRouter.post("/users", addUser);
 //!PATCH Methods
 apiRouter.patch("/users/withdraw", withdraw);
-apiRouter.patch("/users/depositing", depositing);
-apiRouter.patch("/users/transferring", transferring);
+apiRouter.patch("/users/deposit", deposit);
+apiRouter.patch("/users/transfer", transfer);
 //!DELETE Methods
 apiRouter.delete("/users/:id", deleteUser);
 

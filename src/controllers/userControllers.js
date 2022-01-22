@@ -44,7 +44,7 @@ const addUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     const id = req.body.id;
     try {
-        const user = await userModel.findByIdAndDelete(id);
+        const user = await userModel.deleteOne({ id: id });
         if (!user) {
             return res
                 .status(404)
@@ -59,15 +59,15 @@ const deleteUser = async (req, res) => {
 const withdraw = async (req, res) => {
     const { id, withdraw } = req.body;
     try {
-        const updatedUser = await userModel.findById(id);
+        const updatedUser = await userModel.find({ id: id });
         if (updatedUser.cash - withdraw < 0) {
             return res
                 .status(400)
                 .send(`Can't withdraw ${withdraw}$ from ${updatedUser.cash}`);
         }
         const newCash = updatedUser.cash - withdraw;
-        const user = await userModel.findByIdAndUpdate(
-            id,
+        const user = await userModel.updateOne(
+            { id: id },
             { cash: newCash },
             { new: true }
         );
@@ -80,13 +80,13 @@ const withdraw = async (req, res) => {
     }
 };
 
-const depositing = async (req, res) => {
+const deposit = async (req, res) => {
     const { id, deposit } = req.body;
     try {
-        const updatedUser = await userModel.findById(id);
+        const updatedUser = await userModel.find({ id: id });
         const newCash = updatedUser.cash + deposit;
-        const user = await userModel.findByIdAndUpdate(
-            id,
+        const user = await userModel.updateOne(
+            { id: id },
             { cash: newCash },
             { new: true }
         );
@@ -99,23 +99,30 @@ const depositing = async (req, res) => {
     }
 };
 
-const transferring = async (req, res) => {
+const transfer = async (req, res) => {
     const { id1, id2, transfer } = req.body;
     try {
-        const user1 = await userModel.findById(id1);
-        const user2 = await userModel.findById(id2);
+        const user1 = await userModel.find({ id: id1 });
+        const user2 = await userModel.find({ id: id2 });
         if (!user1 || !user2) {
             return res.status(404).send("Couldn't find user.");
         }
+        if (user1.cash - transfer < 0) {
+            return res
+                .status(400)
+                .send(
+                    `Cannot transfer ${transfer}$ from user with ID "${id1}"`
+                );
+        }
         const newCash1 = user1.cash - transfer;
         const newCash2 = user2.cash + transfer;
-        const newUser1 = await userModel.findByIdAndUpdate(
-            id1,
+        const newUser1 = await userModel.updateOne(
+            { id: id1 },
             { cash: newCash1 },
             { new: true }
         );
-        const newUser2 = await userModel.findByIdAndUpdate(
-            id2,
+        const newUser2 = await userModel.updateOne(
+            { id: id2 },
             { cash: newCash2 },
             { new: true }
         );
@@ -134,6 +141,6 @@ module.exports = {
     deleteUser,
     getAllUsers,
     withdraw,
-    depositing,
-    transferring,
+    deposit,
+    transfer,
 };
