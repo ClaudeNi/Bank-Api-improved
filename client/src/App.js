@@ -31,9 +31,6 @@ function App() {
                 case "Add a user":
                     disableInputs([id2Ref]);
                     break;
-                case "Delete a user":
-                    disableInputs([id2Ref, cashRef, creditRef]);
-                    break;
                 case "Withdraw cash":
                     disableInputs([id2Ref, creditRef]);
                     break;
@@ -70,13 +67,6 @@ function App() {
                     setText("Please fill in the ID in input ID 1");
                 } else {
                     addData();
-                }
-                break;
-            case "Delete a user":
-                if (tempID1.length === 0) {
-                    setText("Please fill in the ID in input ID 1");
-                } else {
-                    deleteData(id1Ref.current.value);
                 }
                 break;
             case "Withdraw cash":
@@ -133,11 +123,6 @@ function App() {
 
     const updateData = async () => {};
 
-    const deleteData = async (id) => {
-        const response = await axios.delete(`/api/users/${id}`);
-        console.log(response);
-    };
-
     const enableAllInputs = () => {
         id1Ref.current.disabled = false;
         id2Ref.current.disabled = false;
@@ -160,7 +145,6 @@ function App() {
                     <option>Get all users</option>
                     <option>Get specific user</option>
                     <option>Add a user</option>
-                    <option>Delete a user</option>
                     <option>Withdraw cash</option>
                     <option>Deposit cash</option>
                     <option>Transfer cash</option>
