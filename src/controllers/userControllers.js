@@ -50,10 +50,10 @@ const withdraw = async (req, res) => {
                 .send(`Can't withdraw ${withdraw}$ from ${updatedUser.cash}`);
         }
         const userID = updatedUser._id;
-        const newCash = updatedUser.cash - withdraw;
+        const newCash = +updatedUser.cash - +withdraw;
         const user = await userModel.findByIdAndUpdate(
             userID,
-            { cash: newCash },
+            { cash: +newCash },
             { new: true }
         );
         if (!user) {
@@ -70,10 +70,10 @@ const deposit = async (req, res) => {
     try {
         const updatedUser = await userModel.find({ id: id });
         const userID = updatedUser._id;
-        const newCash = updatedUser.cash + deposit;
+        const newCash = +updatedUser.cash + +deposit;
         const user = await userModel.findByIdAndUpdate(
             userID,
-            { cash: newCash },
+            { cash: +newCash },
             { new: true }
         );
         if (!user) {
@@ -102,16 +102,16 @@ const transfer = async (req, res) => {
         }
         const user1ID = user1._id;
         const user2ID = user2._id;
-        const newCash1 = user1.cash - transfer;
-        const newCash2 = user2.cash + transfer;
+        const newCash1 = +user1.cash - +transfer;
+        const newCash2 = +user2.cash + +transfer;
         const newUser1 = await userModel.findByIdAndUpdate(
             user1ID,
-            { cash: newCash1 },
+            { cash: +newCash1 },
             { new: true }
         );
         const newUser2 = await userModel.findByIdAndUpdate(
             user2ID,
-            { cash: newCash2 },
+            { cash: +newCash2 },
             { new: true }
         );
         if (!newUser1 || !newUser2) {
