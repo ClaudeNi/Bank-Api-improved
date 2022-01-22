@@ -20,6 +20,7 @@ function App() {
         selectRef.current.addEventListener("change", () => {
             const tempSelect = selectRef.current.selectedOptions[0].text;
             setSelect(tempSelect);
+            enableAllInputs();
             switch (tempSelect) {
                 case "Get all users":
                     disableInputs([inputRef1, inputRef2, inputRef3, inputRef4]);
@@ -89,6 +90,13 @@ function App() {
     const updateData = async () => {};
 
     const deleteData = async () => {};
+
+    const enableAllInputs = () => {
+        inputRef1.current.disabled = false;
+        inputRef2.current.disabled = false;
+        inputRef3.current.disabled = false;
+        inputRef4.current.disabled = false;
+    };
 
     const disableInputs = (inputs) => {
         inputs.forEach((input) => {
