@@ -2,7 +2,6 @@ const express = require("express");
 const {
     getUser,
     addUser,
-    deleteUser,
     getAllUsers,
     withdraw,
     deposit,

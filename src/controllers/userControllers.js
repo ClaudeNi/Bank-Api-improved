@@ -122,7 +122,6 @@ const transfer = async (req, res) => {
 module.exports = {
     getUser,
     addUser,
-    deleteUser,
     getAllUsers,
     withdraw,
     deposit,
