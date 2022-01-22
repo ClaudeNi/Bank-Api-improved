@@ -51,9 +51,9 @@ function App() {
 
     const handleSend = (e) => {
         e.preventDefault();
-        tempID1 = id1Ref.current.value;
-        tempID2 = id2Ref.current.value;
-        tempCash = cashRef.current.value;
+        const tempID1 = id1Ref.current.value;
+        const tempID2 = id2Ref.current.value;
+        const tempCash = cashRef.current.value;
         switch (select) {
             case "Get all users":
                 fetchData("");
