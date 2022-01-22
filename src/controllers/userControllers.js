@@ -34,7 +34,7 @@ const addUser = async (req, res) => {
     const user = await new userModel(req.body);
     try {
         await user.save();
-        res.status(201).send(user);
+        res.status(201).send(`Added user.`);
     } catch (e) {
         res.status(400).send(e.message);
     }
@@ -50,8 +50,8 @@ const withdraw = async (req, res) => {
                 .status(400)
                 .send(`Can't withdraw ${withdraw}$ from ${updatedUser.cash}`);
         }
-        const userID = updatedUser._id;
-        const newCash = +updatedUser.cash - +withdraw;
+        const userID = updatedUser[0]._id;
+        const newCash = +updatedUser[0].cash - +withdraw;
         const user = await userModel.findByIdAndUpdate(
             userID,
             { cash: +newCash },
@@ -60,7 +60,7 @@ const withdraw = async (req, res) => {
         if (!user) {
             return res.status(404).send(`No User with the ID "${id}"`);
         }
-        res.status(200).send(user);
+        res.status(200).send(`Withdrew ${withdraw}$.`);
     } catch (e) {
         res.status(500).send(e.message);
     }
@@ -69,11 +69,10 @@ const withdraw = async (req, res) => {
 const deposit = async (req, res) => {
     const id = req.body.id;
     const deposit = req.body.deposit;
-    console.log(id, deposit);
     try {
         const updatedUser = await userModel.find({ id: id });
-        const userID = updatedUser._id;
-        const newCash = +updatedUser.cash + +deposit;
+        const userID = updatedUser[0]._id;
+        const newCash = +updatedUser[0].cash + +deposit;
         const user = await userModel.findByIdAndUpdate(
             userID,
             { cash: +newCash },
@@ -82,7 +81,7 @@ const deposit = async (req, res) => {
         if (!user) {
             return res.status(404).send("No User with this ID.");
         }
-        res.status(200).send(user);
+        res.status(200).send(`Deposited ${deposit}$.`);
     } catch (e) {
         res.status(500).send(e.message);
     }
@@ -105,10 +104,10 @@ const transfer = async (req, res) => {
                     `Cannot transfer ${transfer}$ from user with ID "${id1}"`
                 );
         }
-        const user1ID = user1._id;
-        const user2ID = user2._id;
-        const newCash1 = +user1.cash - +transfer;
-        const newCash2 = +user2.cash + +transfer;
+        const user1ID = user1[0]._id;
+        const user2ID = user2[0]._id;
+        const newCash1 = +user1[0].cash - +transfer;
+        const newCash2 = +user2[0].cash + +transfer;
         const newUser1 = await userModel.findByIdAndUpdate(
             user1ID,
             { cash: +newCash1 },
@@ -122,7 +121,7 @@ const transfer = async (req, res) => {
         if (!newUser1 || !newUser2) {
             return res.status(404).send("Couldn't find user.");
         }
-        res.status(200).send(newUser1, newUser2);
+        res.status(200).send(`Transfered ${transfer}$.`);
     } catch (e) {
         res.status(500).send(e.message);
     }
