@@ -19,7 +19,5 @@ apiRouter.post("/users", addUser);
 apiRouter.patch("/users/withdraw", withdraw);
 apiRouter.patch("/users/deposit", deposit);
 apiRouter.patch("/users/transfer", transfer);
-//!DELETE Methods
-apiRouter.delete("/users/:id", deleteUser);
 
 module.exports = apiRouter;

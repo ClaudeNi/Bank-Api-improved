@@ -40,24 +40,6 @@ const addUser = async (req, res) => {
     }
 };
 
-//Deletes a user
-const deleteUser = async (req, res) => {
-    const id = req.body.id;
-    try {
-        const user = await userModel.find({ id: id });
-        console.log(user._id);
-        const deletedUser = await userModel.findByIdAndDelete(user._id);
-        if (!user || !deletedUser) {
-            return res
-                .status(404)
-                .send(`Couldn't find a user with the ID "${id}"`);
-        }
-        res.send("user has been deleted " + deletedUser);
-    } catch (e) {
-        res.status(500).send(e);
-    }
-};
-
 const withdraw = async (req, res) => {
     const { id, withdraw } = req.body;
     try {
