@@ -49,8 +49,13 @@ const withdraw = async (req, res) => {
                 .status(400)
                 .send(`Can't withdraw ${withdraw}$ from ${updatedUser.cash}`);
         }
+        const userID = updatedUser._id;
         const newCash = updatedUser.cash - withdraw;
-        const user = await userModel.updateOne({ id: id }, { cash: newCash });
+        const user = await userModel.findByIdAndUpdate(
+            userID,
+            { cash: newCash },
+            { new: true }
+        );
         if (!user) {
             return res.status(404).send(`No User with the ID "${id}"`);
         }
@@ -64,8 +69,13 @@ const deposit = async (req, res) => {
     const { id, deposit } = req.body;
     try {
         const updatedUser = await userModel.find({ id: id });
+        const userID = updatedUser._id;
         const newCash = updatedUser.cash + deposit;
-        const user = await userModel.updateOne({ id: id }, { cash: newCash });
+        const user = await userModel.findByIdAndUpdate(
+            userID,
+            { cash: newCash },
+            { new: true }
+        );
         if (!user) {
             return res.status(404).send("No User with this ID.");
         }
@@ -90,15 +100,19 @@ const transfer = async (req, res) => {
                     `Cannot transfer ${transfer}$ from user with ID "${id1}"`
                 );
         }
+        const user1ID = user1._id;
+        const user2ID = user2._id;
         const newCash1 = user1.cash - transfer;
         const newCash2 = user2.cash + transfer;
-        const newUser1 = await userModel.updateOne(
-            { id: id1 },
-            { cash: newCash1 }
+        const newUser1 = await userModel.findByIdAndUpdate(
+            user1ID,
+            { cash: newCash1 },
+            { new: true }
         );
-        const newUser2 = await userModel.updateOne(
-            { id: id2 },
-            { cash: newCash2 }
+        const newUser2 = await userModel.findByIdAndUpdate(
+            user2ID,
+            { cash: newCash2 },
+            { new: true }
         );
         if (!newUser1 || !newUser2) {
             return res.status(404).send("Couldn't find user.");
