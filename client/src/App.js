@@ -51,36 +51,36 @@ function App() {
 
     const handleSend = (e) => {
         e.preventDefault();
+        tempID1 = id1Ref.current.value;
+        tempID2 = id2Ref.current.value;
+        tempCash = cashRef.current.value;
         switch (select) {
             case "Get all users":
                 fetchData("");
                 break;
             case "Get specific user":
-                if (id1Ref.current.value.length === 0) {
+                if (tempID1.length === 0) {
                     setText("Please fill in the ID in input ID 1");
                 } else {
-                    fetchData(`/${id1Ref.current.value}`);
+                    fetchData(`/${tempID1}`);
                 }
                 break;
             case "Add a user":
-                if (id1Ref.current.value.length === 0) {
+                if (tempID1.length === 0) {
                     setText("Please fill in the ID in input ID 1");
                 } else {
-                    updateData();
+                    addData();
                 }
                 break;
             case "Delete a user":
-                if (id1Ref.current.value.length === 0) {
+                if (tempID1.length === 0) {
                     setText("Please fill in the ID in input ID 1");
                 } else {
                     deleteData();
                 }
                 break;
             case "Withdraw cash":
-                if (
-                    id1Ref.current.value.length === 0 ||
-                    cashRef.current.value.length === 0
-                ) {
+                if (tempID1.length === 0 || tempCash.length === 0) {
                     setText(
                         "Please fill in the requested Data in the open Inputs"
                     );
@@ -89,10 +89,7 @@ function App() {
                 }
                 break;
             case "Deposit cash":
-                if (
-                    id1Ref.current.value.length === 0 ||
-                    cashRef.current.value.length === 0
-                ) {
+                if (tempID1.length === 0 || tempCash.length === 0) {
                     setText(
                         "Please fill in the requested Data in the open Inputs"
                     );
@@ -102,9 +99,9 @@ function App() {
                 break;
             case "Transfer cash":
                 if (
-                    id1Ref.current.value.length === 0 ||
-                    id2Ref.current.value.length === 0 ||
-                    cashRef.current.value.length === 0
+                    tempID1.length === 0 ||
+                    tempID2.length === 0 ||
+                    tempCash.length === 0
                 ) {
                     setText(
                         "Please fill in the requested Data in the open Inputs"
@@ -123,9 +120,21 @@ function App() {
         const fetchedData = await axios.get(`/users${id}`);
     };
 
+    const addData = async () => {
+        const user = {
+            id: id1Ref.current.value,
+            cash: cashRef.current.value || 0,
+            creditRef: creditRef.current.value || 0,
+        };
+        const response = await axios.post(`/users`, user);
+        console.log(response);
+    };
+
     const updateData = async () => {};
 
-    const deleteData = async () => {};
+    const deleteData = async (id) => {
+        const response = await axios.delete(`/users/${id}`);
+    };
 
     const enableAllInputs = () => {
         id1Ref.current.disabled = false;
