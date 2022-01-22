@@ -77,7 +77,7 @@ function App() {
                 } else {
                     const update = {
                         id: tempID1,
-                        cash: tempCash,
+                        withdraw: tempCash,
                     };
                     updateData("withdraw", update);
                 }
@@ -90,7 +90,7 @@ function App() {
                 } else {
                     const update = {
                         id: tempID1,
-                        cash: tempCash,
+                        deposit: tempCash,
                     };
                     updateData("deposit", update);
                 }
@@ -108,7 +108,7 @@ function App() {
                     const update = {
                         id1: tempID1,
                         id2: tempID2,
-                        cash: tempCash,
+                        transfer: tempCash,
                     };
                     updateData("transfer", update);
                 }
