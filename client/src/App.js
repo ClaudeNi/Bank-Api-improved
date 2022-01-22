@@ -50,7 +50,7 @@ function App() {
         e.preventDefault();
         const tempID1 = id1Ref.current.value;
         const tempID2 = id2Ref.current.value;
-        const tempCash = cashRef.current.value;
+        const tempCash = +cashRef.current.value;
         switch (select) {
             case "Get all users":
                 fetchData("");
