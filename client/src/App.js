@@ -76,7 +76,7 @@ function App() {
                 if (tempID1.length === 0) {
                     setText("Please fill in the ID in input ID 1");
                 } else {
-                    deleteData();
+                    deleteData(id1Ref.current.value);
                 }
                 break;
             case "Withdraw cash":
