@@ -41,7 +41,8 @@ const addUser = async (req, res) => {
 };
 
 const withdraw = async (req, res) => {
-    const { id, withdraw } = req.body;
+    const id = req.body.id;
+    const withdraw = req.body.withdraw;
     try {
         const updatedUser = await userModel.find({ id: id });
         if (updatedUser.cash - withdraw < 0) {
@@ -66,7 +67,8 @@ const withdraw = async (req, res) => {
 };
 
 const deposit = async (req, res) => {
-    const { id, deposit } = req.body;
+    const id = req.body.id;
+    const deposit = req.body.deposit;
     console.log(id, deposit);
     try {
         const updatedUser = await userModel.find({ id: id });
@@ -88,6 +90,9 @@ const deposit = async (req, res) => {
 
 const transfer = async (req, res) => {
     const { id1, id2, transfer } = req.body;
+    const id1 = req.body.id1;
+    const id2 = req.body.id2;
+    const transfer = req.body.transfer;
     try {
         const user1 = await userModel.find({ id: id1 });
         const user2 = await userModel.find({ id: id2 });
