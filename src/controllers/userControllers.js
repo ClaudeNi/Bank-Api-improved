@@ -45,8 +45,9 @@ const deleteUser = async (req, res) => {
     const id = req.body.id;
     try {
         const user = await userModel.find({ id: id });
+        console.log(user._id);
         const deletedUser = await userModel.findByIdAndDelete(user._id);
-        if (!user || !deleteUser) {
+        if (!user || !deletedUser) {
             return res
                 .status(404)
                 .send(`Couldn't find a user with the ID "${id}"`);
