@@ -117,7 +117,8 @@ function App() {
     };
 
     const fetchData = async (id) => {
-        const fetchedData = await axios.get(`/users${id}`);
+        const fetchedData = await axios.get(`/api/users${id}`);
+        console.log(fetchedData);
     };
 
     const addData = async () => {
@@ -126,14 +127,15 @@ function App() {
             cash: cashRef.current.value || 0,
             creditRef: creditRef.current.value || 0,
         };
-        const response = await axios.post(`/users`, user);
+        const response = await axios.post(`/api/users`, user);
         console.log(response);
     };
 
     const updateData = async () => {};
 
     const deleteData = async (id) => {
-        const response = await axios.delete(`/users/${id}`);
+        const response = await axios.delete(`/api/users/${id}`);
+        console.log(response);
     };
 
     const enableAllInputs = () => {
