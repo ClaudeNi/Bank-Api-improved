@@ -4,16 +4,16 @@ import "./App.css";
 
 function App() {
     const [text, setText] = useState();
-    const [input1, setInput1] = useState();
-    const [input2, setInput2] = useState();
-    const [input3, setInput3] = useState();
-    const [input4, setInput4] = useState();
+    const [ID1, setID1] = useState();
+    const [ID2, setID2] = useState();
+    const [Cash, setCash] = useState();
+    const [Credit, setCredit] = useState();
     const [select, setSelect] = useState("Select");
 
-    const inputRef1 = useRef();
-    const inputRef2 = useRef();
-    const inputRef3 = useRef();
-    const inputRef4 = useRef();
+    const id1Ref = useRef();
+    const id2Ref = useRef();
+    const cashRef = useRef();
+    const creditRef = useRef();
     const selectRef = useRef();
 
     useEffect(() => {
@@ -23,25 +23,25 @@ function App() {
             enableAllInputs();
             switch (tempSelect) {
                 case "Get all users":
-                    disableInputs([inputRef1, inputRef2, inputRef3, inputRef4]);
+                    disableInputs([id1Ref, id2Ref, cashRef, creditRef]);
                     break;
                 case "Get specific user":
-                    disableInputs([inputRef2, inputRef3, inputRef4]);
+                    disableInputs([id2Ref, cashRef, creditRef]);
                     break;
                 case "Add a user":
-                    disableInputs([inputRef2]);
+                    disableInputs([id2Ref]);
                     break;
                 case "Delete a user":
-                    disableInputs([inputRef2, inputRef3, inputRef4]);
+                    disableInputs([id2Ref, cashRef, creditRef]);
                     break;
                 case "Withdraw cash":
-                    disableInputs([inputRef2, inputRef4]);
+                    disableInputs([id2Ref, creditRef]);
                     break;
                 case "Deposit cash":
-                    disableInputs([inputRef2, inputRef4]);
+                    disableInputs([id2Ref, creditRef]);
                     break;
                 case "Transfer cash":
-                    disableInputs([inputRef4]);
+                    disableInputs([creditRef]);
                     break;
                 default:
                     break;
@@ -56,26 +56,62 @@ function App() {
                 fetchData("");
                 break;
             case "Get specific user":
-                if (inputRef1.current.value.length === 0) {
+                if (id1Ref.current.value.length === 0) {
                     setText("Please fill in the ID in input ID 1");
                 } else {
-                    fetchData(`/${inputRef1.current.value}`);
+                    fetchData(`/${id1Ref.current.value}`);
                 }
                 break;
             case "Add a user":
-                if (inputRef1.current.value.length === 0) {
+                if (id1Ref.current.value.length === 0) {
                     setText("Please fill in the ID in input ID 1");
                 } else {
                     updateData();
                 }
                 break;
             case "Delete a user":
+                if (id1Ref.current.value.length === 0) {
+                    setText("Please fill in the ID in input ID 1");
+                } else {
+                    deleteData();
+                }
                 break;
             case "Withdraw cash":
+                if (
+                    id1Ref.current.value.length === 0 ||
+                    cashRef.current.value.length === 0
+                ) {
+                    setText(
+                        "Please fill in the requested Data in the open Inputs"
+                    );
+                } else {
+                    updateData();
+                }
                 break;
             case "Deposit cash":
+                if (
+                    id1Ref.current.value.length === 0 ||
+                    cashRef.current.value.length === 0
+                ) {
+                    setText(
+                        "Please fill in the requested Data in the open Inputs"
+                    );
+                } else {
+                    updateData();
+                }
                 break;
             case "Transfer cash":
+                if (
+                    id1Ref.current.value.length === 0 ||
+                    id2Ref.current.value.length === 0 ||
+                    cashRef.current.value.length === 0
+                ) {
+                    setText(
+                        "Please fill in the requested Data in the open Inputs"
+                    );
+                } else {
+                    updateData();
+                }
                 break;
             default:
                 setText("Please select the action you want to make.");
@@ -92,10 +128,10 @@ function App() {
     const deleteData = async () => {};
 
     const enableAllInputs = () => {
-        inputRef1.current.disabled = false;
-        inputRef2.current.disabled = false;
-        inputRef3.current.disabled = false;
-        inputRef4.current.disabled = false;
+        id1Ref.current.disabled = false;
+        id2Ref.current.disabled = false;
+        cashRef.current.disabled = false;
+        creditRef.current.disabled = false;
     };
 
     const disableInputs = (inputs) => {
@@ -124,33 +160,33 @@ function App() {
                     <label>ID 1: </label>
                     <input
                         type={"text"}
-                        ref={inputRef1}
-                        onChange={(e) => setInput1(e.target.value)}
-                        value={input1}
+                        ref={id1Ref}
+                        onChange={(e) => setID1(e.target.value)}
+                        value={ID1}
                         disabled
                     ></input>
                     <label>ID 2: </label>
                     <input
                         type={"text"}
-                        ref={inputRef2}
-                        onChange={(e) => setInput2(e.target.value)}
-                        value={input2}
+                        ref={id2Ref}
+                        onChange={(e) => setID2(e.target.value)}
+                        value={ID2}
                         disabled
                     ></input>
                     <label>Cash: </label>
                     <input
                         type={"number"}
-                        ref={inputRef3}
-                        onChange={(e) => setInput3(e.target.value)}
-                        value={input3}
+                        ref={cashRef}
+                        onChange={(e) => setCash(e.target.value)}
+                        value={Cash}
                         disabled
                     ></input>
                     <label>Credit: </label>
                     <input
                         type={"number"}
-                        ref={inputRef4}
-                        onChange={(e) => setInput4(e.target.value)}
-                        value={input4}
+                        ref={creditRef}
+                        onChange={(e) => setCredit(e.target.value)}
+                        value={Credit}
                         disabled
                     ></input>
                     <input
