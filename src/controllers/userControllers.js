@@ -67,6 +67,7 @@ const withdraw = async (req, res) => {
 
 const deposit = async (req, res) => {
     const { id, deposit } = req.body;
+    console.log(id, deposit);
     try {
         const updatedUser = await userModel.find({ id: id });
         const userID = updatedUser._id;
