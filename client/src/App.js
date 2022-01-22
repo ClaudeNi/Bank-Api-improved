@@ -75,7 +75,11 @@ function App() {
                         "Please fill in the requested Data in the open Inputs"
                     );
                 } else {
-                    updateData();
+                    const update = {
+                        id: tempID1,
+                        cash: tempCash,
+                    };
+                    updateData("withdraw", update);
                 }
                 break;
             case "Deposit cash":
@@ -84,7 +88,11 @@ function App() {
                         "Please fill in the requested Data in the open Inputs"
                     );
                 } else {
-                    updateData();
+                    const update = {
+                        id: tempID1,
+                        cash: tempCash,
+                    };
+                    updateData("deposit", update);
                 }
                 break;
             case "Transfer cash":
@@ -97,7 +105,12 @@ function App() {
                         "Please fill in the requested Data in the open Inputs"
                     );
                 } else {
-                    updateData();
+                    const update = {
+                        id1: tempID1,
+                        id2: tempID2,
+                        cash: tempCash,
+                    };
+                    updateData("transfer", update);
                 }
                 break;
             default:
@@ -121,7 +134,10 @@ function App() {
         console.log(response);
     };
 
-    const updateData = async () => {};
+    const updateData = async (action, update) => {
+        const response = await axios.patch(`/api/users/${action}`, update);
+        console.log(response);
+    };
 
     const enableAllInputs = () => {
         id1Ref.current.disabled = false;
