@@ -44,13 +44,14 @@ const addUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     const id = req.body.id;
     try {
-        const user = await userModel.deleteOne({ id: id });
-        if (!user) {
+        const user = await userModel.find({ id: id });
+        const deletedUser = await userModel.findByIdAndDelete(user["_id"]);
+        if (!user || !deleteUser) {
             return res
                 .status(404)
                 .send(`Couldn't find a user with the ID "${id}"`);
         }
-        res.send("user has been deleted" + user);
+        res.send("user has been deleted" + deletedUser);
     } catch (e) {
         res.status(500).send(e);
     }
