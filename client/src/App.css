@@ -14,3 +14,15 @@
     display: flex;
     flex-direction: column;
 }
+
+.user-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.user-item {
+    padding: 1rem;
+}

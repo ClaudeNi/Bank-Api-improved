@@ -3,6 +3,7 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
+    const [users, setUsers] = useState([]);
     const [text, setText] = useState();
     const [ID1, setID1] = useState();
     const [ID2, setID2] = useState();
@@ -51,6 +52,7 @@ function App() {
         const tempID1 = id1Ref.current.value;
         const tempID2 = id2Ref.current.value;
         const tempCash = +cashRef.current.value;
+        setUsers([]);
         switch (select) {
             case "Get all users":
                 fetchData("");
@@ -121,7 +123,7 @@ function App() {
 
     const fetchData = async (id) => {
         const fetchedData = await axios.get(`/api/users${id}`);
-        console.log(fetchedData);
+        setUsers(fetchedData.data);
     };
 
     const addData = async () => {
@@ -131,12 +133,12 @@ function App() {
             creditRef: creditRef.current.value || 0,
         };
         const response = await axios.post(`/api/users`, user);
-        console.log(response);
+        setText(response.data);
     };
 
     const updateData = async (action, update) => {
         const response = await axios.patch(`/api/users/${action}`, update);
-        console.log(response);
+        setText(response.data);
     };
 
     const enableAllInputs = () => {
@@ -149,6 +151,19 @@ function App() {
     const disableInputs = (inputs) => {
         inputs.forEach((input) => {
             input.current.disabled = true;
+        });
+    };
+
+    const displayUsers = () => {
+        return users.map((user) => {
+            return (
+                <div className="user-container">
+                    <div className="user-item">_id: {user._id}</div>
+                    <div className="user-item">id: {user.id}</div>
+                    <div className="user-item">cash: {user.cash}</div>
+                    <div className="user-item">credit: {user.credit}</div>
+                </div>
+            );
         });
     };
 
@@ -207,7 +222,7 @@ function App() {
                     ></input>
                 </form>
             </div>
-            <div>{text}</div>
+            <div>{users.length === 0 ? text : displayUsers()}</div>
         </div>
     );
 }
