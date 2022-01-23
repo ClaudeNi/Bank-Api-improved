@@ -45,10 +45,12 @@ const withdraw = async (req, res) => {
     const withdraw = req.body.withdraw;
     try {
         const updatedUser = await userModel.find({ id: id });
-        if (updatedUser.cash - withdraw < 0) {
+        if (updatedUser[0].cash - withdraw < 0) {
             return res
                 .status(400)
-                .send(`Can't withdraw ${withdraw}$ from ${updatedUser.cash}`);
+                .send(
+                    `Can't withdraw ${withdraw}$ from ${updatedUser[0].cash}`
+                );
         }
         const userID = updatedUser[0]._id;
         const newCash = +updatedUser[0].cash - +withdraw;
