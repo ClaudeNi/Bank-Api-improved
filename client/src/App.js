@@ -53,6 +53,7 @@ function App() {
         const tempID2 = id2Ref.current.value;
         const tempCash = +cashRef.current.value;
         setUsers([]);
+        setText("");
         switch (select) {
             case "Get all users":
                 fetchData("");
@@ -133,6 +134,7 @@ function App() {
             creditRef: creditRef.current.value || 0,
         };
         const response = await axios.post(`/api/users`, user);
+        console.log(response);
         setText(response.data);
     };
 
