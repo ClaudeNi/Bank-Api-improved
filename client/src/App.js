@@ -154,7 +154,7 @@ function App() {
 
     return (
         <div className="App">
-            <div>
+            <div className="action-container">
                 Action:
                 <select ref={selectRef}>
                     <option>Select</option>
@@ -167,7 +167,7 @@ function App() {
                 </select>
             </div>
             <div>
-                <form>
+                <form className="form">
                     <label>ID 1: </label>
                     <input
                         type={"text"}
